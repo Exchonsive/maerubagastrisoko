@@ -1,0 +1,28 @@
+.hero-container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.hero-title {
+  font-size: clamp(4rem, 10vw, 8rem); /* Ukuran font responsif (mengecil di HP) */
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin: 0;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.hero-subtitle {
+  font-size: clamp(0.8rem, 2vw, 1.2rem);
+  font-weight: 300;
+  letter-spacing: 0.3em;
+  margin-top: 1rem;
+  color: #888888;
+  text-transform: uppercase;
+}
