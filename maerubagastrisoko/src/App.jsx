@@ -30,8 +30,8 @@ function App() {
     <main className="hero-container" ref={containerRef}>
       <HeroScene />
       <div className="text-wrapper">
-        <h1 className="hero-title">Maeru</h1>
-        <p className="hero-subtitle">Hello World!</p>
+        <h1 className="hero-title"></h1>
+        <p className="hero-subtitle"></p>
       </div>
     </main>
   );

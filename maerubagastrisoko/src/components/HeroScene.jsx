@@ -1,6 +1,23 @@
 import { useEffect, useRef } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { Grid } from '@react-three/drei';
+import { Suspense } from 'react';
+import { Grid, useGLTF, Environment } from '@react-three/drei';
+
+function MaeruText(props) {
+  const { scene } = useGLTF('/models/maeru.glb');
+
+  useEffect(() => {
+    scene.traverse((child) => {
+      if (child.isMesh) {
+        child.material.metalness = 1;
+        child.material.roughness = 0.05;
+        child.material.envMapIntensity = 2.5; // makin gede, pantulan makin kuat/terang
+      }
+    });
+  }, [scene]);
+
+  return <primitive object={scene} {...props} />;
+}
 
 // Menggerakkan kamera sedikit mengikuti posisi mouse, biar terasa "hidup"
 // tanpa harus bikin objek yang berputar sendiri. Posisi mouse diambil dari
@@ -24,9 +41,9 @@ function CameraRig() {
     const targetY = 1.4 - mouse.current.y * 0.4;
 
     // Lerp (interpolasi halus) supaya gerakannya smooth, bukan langsung nempel ke mouse
-    camera.position.x += (targetX - camera.position.x) * 0.03;
-    camera.position.y += (targetY - camera.position.y) * 0.03;
-    camera.lookAt(0, 0.4, 0);
+    camera.position.x += (targetX - camera.position.x) * 0.05;
+    camera.position.y += (targetY - camera.position.y) * 0.05;
+    camera.lookAt(0, 1, 0);
   });
 
   return null;
@@ -45,19 +62,23 @@ function DigitalGrid() {
       sectionSize={2.5}
       sectionThickness={1.2}
       sectionColor="#ffffff"
-      fadeDistance={22}
+      fadeDistance={50}
       fadeStrength={1.5}
       infiniteGrid
       followCamera={false}
     />
+    
+    
   );
 }
+
+
 
 export default function HeroScene() {
   return (
     <Canvas
       className="hero-canvas"
-      camera={{ position: [0, 1.4, 6.5], fov: 45 }}
+      camera={{ position: [0, 80, 15], fov: 50 }}
       dpr={[1, 1.5]}
     >
       {/* Fog bikin grid perlahan menghilang ke warna background, kesan "ruang tanpa batas" */}
@@ -65,6 +86,10 @@ export default function HeroScene() {
       <ambientLight intensity={0.6} />
       <DigitalGrid />
       <CameraRig />
+      <Suspense fallback={null}>
+        <MaeruText position={[0, 0, -5]} scale={0.5} />
+        <Environment preset="sunset" />
+      </Suspense>
     </Canvas>
   );
 }
