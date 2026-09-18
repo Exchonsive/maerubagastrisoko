@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
+import HeroScene from './components/HeroScene.jsx';
 import './App.css';
 
 function App() {
@@ -27,9 +28,10 @@ function App() {
 
   return (
     <main className="hero-container" ref={containerRef}>
+      <HeroScene />
       <div className="text-wrapper">
         <h1 className="hero-title">Maeru</h1>
-        <p className="hero-subtitle">AI & Creative Developer</p>
+        <p className="hero-subtitle">Hello World!</p>
       </div>
     </main>
   );
